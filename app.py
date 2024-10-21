@@ -1,4 +1,6 @@
 from flask import Flask #Biblioteca
+from flask import render_template
+from flask import request
 
 app = Flask(__name__) #Carregamento
 
@@ -8,4 +10,13 @@ def index(): #Função
 
 @app.route("/aluno/<nome>")
 def aluno(nome):
-    return f"<h1>Meu nome é {nome}</h1>"
+    return render_template("formulario.html")
+
+@app.route("/envio", methods=["POST"])
+def envioForms():
+    nombre = request.form["nome"]
+    senha = request.form["senha"]
+    if senha == "123":
+        return render_template("aluno.html", n=nombre)
+    else:
+        return "DEU ERRADO, SEU CUZÃO!"
